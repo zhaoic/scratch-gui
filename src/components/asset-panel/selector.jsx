@@ -1,17 +1,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import classNames from 'classnames';
 import SpriteSelectorItem from '../../containers/sprite-selector-item.jsx';
-
 import Box from '../box/box.jsx';
 import ActionMenu from '../action-menu/action-menu.jsx';
+import SortableAsset from './sortable-asset.jsx';
+
 import styles from './selector.css';
+
+import bindAll from 'lodash.bindall';
 
 const Selector = props => {
     const {
         buttons,
+        dragType,
         items,
         selectedItemIndex,
+        draggingIndex,
+        ordering,
+        onAddSortable,
+        onRemoveSortable,
         onDeleteClick,
         onDuplicateClick,
         onItemClick
@@ -38,20 +46,31 @@ const Selector = props => {
         <Box className={styles.wrapper}>
             <Box className={styles.listArea}>
                 {items.map((item, index) => (
-                    <SpriteSelectorItem
-                        assetId={item.assetId}
-                        className={styles.listItem}
-                        costumeURL={item.url}
-                        details={item.details}
-                        id={index}
-                        key={`asset-${index}`}
-                        name={item.name}
-                        number={index + 1 /* 1-indexed */}
-                        selected={index === selectedItemIndex}
-                        onClick={onItemClick}
-                        onDeleteButtonClick={onDeleteClick}
-                        onDuplicateButtonClick={onDuplicateClick}
-                    />
+                    <SortableAsset
+                        id={item.name}
+                        index={ordering.indexOf(index)}
+                        key={item.name}
+                        onAddSortable={onAddSortable}
+                        onRemoveSortable={onRemoveSortable}
+                    >
+                        <SpriteSelectorItem
+                            assetId={item.assetId}
+                            className={classNames(styles.listItem, {
+                                [styles.placeholder]: index === draggingIndex
+                            })}
+                            costumeURL={item.url}
+                            details={item.details}
+                            dragType={dragType}
+                            id={index}
+                            index={index}
+                            name={item.name}
+                            number={index + 1 /* 1-indexed */}
+                            selected={index === selectedItemIndex}
+                            onClick={onItemClick}
+                            onDeleteButtonClick={onDeleteClick}
+                            onDuplicateButtonClick={onDuplicateClick}
+                        />
+                    </SortableAsset>
                 ))}
             </Box>
             {newButtonSection}
@@ -65,13 +84,18 @@ Selector.propTypes = {
         img: PropTypes.string.isRequired,
         onClick: PropTypes.func
     })),
+    dragType: PropTypes.string,
+    draggingIndex: PropTypes.number,
     items: PropTypes.arrayOf(PropTypes.shape({
         url: PropTypes.string,
         name: PropTypes.string.isRequired
     })),
+    onAddSortable: PropTypes.func,
     onDeleteClick: PropTypes.func,
     onDuplicateClick: PropTypes.func,
     onItemClick: PropTypes.func.isRequired,
+    onRemoveSortable: PropTypes.func,
+    ordering: PropTypes.arrayOf(PropTypes.number),
     selectedItemIndex: PropTypes.number.isRequired
 };
 

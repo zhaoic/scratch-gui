@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Box from '../box/box.jsx';
-import Selector from './selector.jsx';
+import Selector from '../../containers/selector.jsx';
 import styles from './asset-panel.css';
 
 const AssetPanel = props => (

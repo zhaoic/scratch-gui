@@ -3,6 +3,8 @@ import React from 'react';
 import classNames from 'classnames';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
+import DragConstants from '../../lib/drag-constants';
+
 import Box from '../box/box.jsx';
 import SpriteInfo from '../../containers/sprite-info.jsx';
 import SpriteSelectorItem from '../../containers/sprite-selector-item.jsx';
@@ -106,13 +108,14 @@ const SpriteSelectorComponent = function (props) {
                                     classNames(styles.sprite, styles.receivedBlocks) :
                                     raised && sprite.id !== editingTarget ?
                                         classNames(styles.sprite, styles.raised) : styles.sprite}
+                                dragType={DragConstants.SPRITE}
                                 id={sprite.id}
                                 key={sprite.id}
                                 name={sprite.name}
-                                selected={sprite.id === selectedId}
                                 onClick={onSelectSprite}
                                 onDeleteButtonClick={onDeleteSprite}
                                 onDuplicateButtonClick={onDuplicateSprite}
+                                selected={sprite.id === selectedId}
                             />
                         ))
                     }
