@@ -82,7 +82,14 @@ const base = {
     optimization: {
         minimizer: [
             new UglifyJsPlugin({
-                include: /\.min\.js$/
+                include: /\.min\.js$/,
+                uglifyOptions: {
+                    mangle: {
+                        // Workaround for Safari10 iterator bug "Cannot declare a let variable twice"
+                        // https://github.com/mishoo/UglifyJS2/tree/harmony#mangle-options
+                        safari10: true
+                    }
+                }
             })
         ]
     },
