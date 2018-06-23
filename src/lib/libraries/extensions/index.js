@@ -59,7 +59,7 @@ export default [
         iconURL: wedoImage,
         description: 'Build with motors and sensors.',
         featured: true,
-        disabled: true
+        disabled: false
     },
     {
         name: 'LEGO MINDSTORMS EV3',
