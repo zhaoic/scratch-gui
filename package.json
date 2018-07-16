@@ -29,7 +29,7 @@
     "react-dom": "^16.0.0"
   },
   "dependencies": {
-    "scratch-paint": "github:fsih/scratch-paint#vectorGradient"
+    "scratch-paint": "github:fsih/scratch-paint#bitmapGradient"
   },
   "devDependencies": {
     "arraybuffer-loader": "^1.0.3",
