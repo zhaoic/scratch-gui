@@ -25,3 +25,6 @@ docker run \
 4. 修改
 需要加上--public，才能通过nginx访问到
     "start": "webpack-dev-server --public",
+
+在webpack的devServer中，加入
+    disableHostCheck：true
